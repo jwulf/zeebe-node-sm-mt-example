@@ -1,4 +1,4 @@
-# zeebe-node-sm-mt-example
+# Zeebe Node Self-Managed Multi-tenancy Example
 
 An example of using the Node.js Zeebe client with a Self-Managed Multi-tenant setup
 
