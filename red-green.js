@@ -3,6 +3,20 @@ const path = require('path')
 
 const zbc = new ZB.ZBClient()
 
+/**
+ * All configuration about which server it is running against and for which tenant is configurable via env vars, 
+ * making that a separate concern from the business logic.
+ * 
+ * If you want to do crazy stuff like address different tenants in the same code, 
+ * and make logic errors potentially destroy the isolation of tenants, then I made it possible to override that in code.
+ * 
+ * I don't recommend using explicit tenant Ids in API calls and addressing distinct tenants in the same code as the 
+ * usual practice. This code is to demonstrate tenant isolation in a simple code example. 
+ * 
+ * Note that tenant isolation is at risk when addressing multiple tenants with the same code because a coding error 
+ * can mix up data between two otherwise isolated tenants. 
+ * 
+ */
 async function main() {
 
     const deploymentRed = await zbc.deployResource({
