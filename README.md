@@ -113,6 +113,14 @@ If you didn't see any errors, then everything went according to plan. Exiting.
 
 ## Running the Red / Green Test
 
+The Red / Green test shows how tenants are isolated. The code deploys to a process to two different tenants, and then instantiates two workers - one for each tenant - that then service jobs for that tenant without ever seeing jobs for the other tenant. 
+
+Note: One thing to note about this is that the code example itself violates tenant isolation by implementing access to isolated tenants in a single application. The consequence of this architecture is that a logic error in the application can mix data between tenants, defeating the point of isolation. 
+
+In the normal course of events, you should abstract connection data to the environment variables and keep the application logic "tenant-unaware". 
+
+Instructions:
+
 * Open Identity and create two new tenants: `green` and `red`
 * Edit the NodeApp application
 * Go to Tenants
