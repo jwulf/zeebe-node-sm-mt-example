@@ -110,6 +110,49 @@ Worker received job {
 }
 If you didn't see any errors, then everything went according to plan. Exiting.
 ```
+
+## Running the Red / Green Test
+
+* Open Identity and create two new tenants: `green` and `red`
+* Edit the NodeApp application
+* Go to Tenants
+* Add the `green` and `red` tenants to the NodeApp application
+
+You can now use the same credentials to run `node red-green.js`. 
+
+You will see output like this:
+
+```
+Red Deployment {
+  deployments: [ { process: [Object], Metadata: 'process' } ],
+  key: '2251799813685366',
+  tenantId: 'red'
+}
+Green Deployment {
+  deployments: [ { process: [Object], Metadata: 'process' } ],
+  key: '2251799813685367',
+  tenantId: 'green'
+}
+
+
+Started 4 processes on Red Tenant
+Completed 4 jobs on Red Tenant
+Started 4 processes on Green Tenant
+Completed 4 jobs on Green Tenant
+
+
+Started 9 processes on Red Tenant
+Completed 9 jobs on Red Tenant
+Started 9 processes on Green Tenant
+Completed 9 jobs on Green Tenant
+
+
+Started 14 processes on Red Tenant
+Completed 14 jobs on Red Tenant
+Started 14 processes on Green Tenant
+Completed 14 jobs on Green Tenant
+```
+
 # Running against Camunda SaaS
 
 To run against Camunda SaaS, just export the credentials for your API client from the Camunda SaaS Console. 
