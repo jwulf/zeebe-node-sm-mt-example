@@ -110,3 +110,25 @@ Worker received job {
 }
 If you didn't see any errors, then everything went according to plan. Exiting.
 ```
+# Running against Camunda SaaS
+
+To run against Camunda SaaS, just export the credentials for your API client from the Camunda SaaS Console. 
+
+One gotcha is this: 
+
+If you exported the Self-Managed credentials previously in the terminal, you will need to explicitly turn on TLS with this:
+
+```bash
+export ZEEBE_SECURE_CONNECTION=true
+```
+
+This is because TLS needs to be turned off for the Self-Managed Docker stack running locally, but turned on for Camunda SaaS. And the Camunda SaaS API credentials from the console do not export this. 
+
+So add it to your credentials set from Camunda SaaS to avoid getting an error like this:
+
+```
+ code: 13,
+  details: 'Received RST_STREAM with code 2 triggered by internal client error: Protocol error',
+  metadata: Metadata { internalRepr: Map(0) {}, options: {} },
+  rstCode: 2,
+```

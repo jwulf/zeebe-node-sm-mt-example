@@ -4,6 +4,9 @@ const path = require('path')
 const zbc = new ZB.ZBClient()
 
 async function main() {
+
+    console.log('Requesting topology...')
+
     const topology = await zbc.topology()
 
     console.log('Topology', topology)
