@@ -20,64 +20,60 @@ async function main() {
     console.log('Green Deployment', deploymentGreen)
 
     let redDone = 0
-    let greenDone =0
+    let greenDone = 0
 
+    // Green tenant worker
+    const greenTenantId = 'green'
     zbc.createWorker({
         taskType: 'service-task',
         taskHandler: job => {
-            if (job.tenantId !== 'green') {
+            if (job.tenantId !== greenTenantId) {
                 console.log(`ERROR: Green Tenant worker received job for tenant: ${job.tenantId}`)
             }
             greenDone ++
             return job.complete()
         },
-        tenantId: 'green'
+        tenantId: greenTenantId
     })
 
+    // Red tenant worker
+    const redTenantId = 'red'
     zbc.createWorker({
         taskType: 'service-task',
         taskHandler: job => {
-            if (job.tenantId !== 'red') {
+            if (job.tenantId !== redTenantId) {
                 console.log(`ERROR: Red Tenant worker received job for tenant: ${job.tenantId}`)
             }
             redDone++
             return job.complete()
         },
-        tenantId: 'red'
+        tenantId: redTenantId
     })
 
-    let red = 0
-    let green = 0
+    let redStarted = 0
+    let greenStarted = 0
 
-    setInterval(() => {
-        green++
-        zbc.createProcessInstance({
+    setInterval(() => zbc.createProcessInstance({
             bpmnProcessId: 'simple',
             variables: {},
             tenantId: 'green'
-        })
-    }, 1000)
+        }).then(() => greenStarted++)
+    , 1000)
 
-    setInterval(() => {
-        red++
-        zbc.createProcessInstance({
+    setInterval(() => zbc.createProcessInstance({
             bpmnProcessId: 'simple',
             variables: {},
             tenantId: 'red'
-        })
-    }, 1000)
+        }). then(() => redStarted++)
+    , 1000)
 
     setInterval(() => {
         console.log('\n')
-        console.log(`Started ${red} processes on Red Tenant
+        console.log(`Started ${redStarted} processes on Red Tenant
 Completed ${redDone} jobs on Red Tenant
-Started ${green} processes on Green Tenant
+Started ${greenStarted} processes on Green Tenant
 Completed ${greenDone} jobs on Green Tenant`)
     }, 5000)
-
-    // console.log('Process Instance', processInstance)
-
-
 }
 
 main()
