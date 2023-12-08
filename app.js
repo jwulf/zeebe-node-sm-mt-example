@@ -1,5 +1,7 @@
 const ZB = require('zeebe-node')
 const path = require('path')
+const dotenv = require('dotenv')
+dotenv.config()
 
 const zbc = new ZB.ZBClient()
 
